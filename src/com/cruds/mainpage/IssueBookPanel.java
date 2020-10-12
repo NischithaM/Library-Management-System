@@ -187,10 +187,12 @@ public class IssueBookPanel extends JPanel {
 				int bcount=Integer.parseInt(count);
 				//System.out.println(bcount);
 				IssueDAO dao=new IssueDAO();
-				Issue issue=new Issue(DateUtil.getCurrentDate(),DateUtil.addToCurrentDate(7),selrollno,selisbn);
-				int issueid = dao.create(issue);	
+					
 				if(dao.updateBookCount(selisbn)>0)
 				{
+					Issue issue=new Issue(DateUtil.getCurrentDate(),DateUtil.addToCurrentDate(7),selrollno,selisbn);
+					int issueid = dao.create(issue);
+					
 					if(issueid > 0)
 					{
 						table.setModel(new DefaultTableModel());

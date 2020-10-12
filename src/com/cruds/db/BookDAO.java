@@ -47,7 +47,7 @@ public class BookDAO {
 
 	public Vector<Vector<String>> getAllBooksTitleJTable(String book_title) //obtaining data from book database.
 	{
-
+		int count;
 		book_title = "%" + book_title + "%";
 		String sql="select book_isbn,book_title,book_category,no_of_books from book where book_title like ?";
 		//Book b=null;
@@ -63,6 +63,7 @@ public class BookDAO {
 
 			while(rs != null && rs.next())
 			{
+				
 				row=new Vector<>();
 				row.add(rs.getString(1));
 				row.add(rs.getString(2));

@@ -9,7 +9,7 @@ public class BOOKMAINPAGE  extends JFrame{
 
 	BOOKMAINPAGE() {
 
-		setTitle("book demo");
+		setTitle("book management system");
 		setSize(1000,1000);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);

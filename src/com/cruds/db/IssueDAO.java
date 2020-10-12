@@ -72,6 +72,7 @@ public class IssueDAO {
 
 	public Vector<Vector<String>> getListIssueBookForJTable(String usn) //obtaining data from student database.
 	{
+		
 		usn = "%" + usn + "%";
 		String sql="select usn , book_isbn ,issue_date, return_date from issue where usn like ?";
 		Vector<String> row=new Vector<>();
@@ -85,6 +86,7 @@ public class IssueDAO {
 
 			while(rs != null && rs.next())
 			{
+				
 				row=new Vector<>();
 
 				row.add(rs.getString(1));
@@ -104,7 +106,7 @@ public class IssueDAO {
 		return data;
 	}
 
-	public static int updateBookCount(String isbn)
+	public int updateBookCount(String isbn)
 	{
 		int status=0;
 		int count=0,issued=0;
@@ -132,6 +134,10 @@ public class IssueDAO {
 
 				status=ps1.executeUpdate();
 			}
+			else
+			{
+				System.out.println("book unavailable");
+			}
 
 		} catch (SQLException e) {
 
@@ -139,9 +145,47 @@ public class IssueDAO {
 		}
 		return status;
 	}
+	
+	public Vector<Vector<String>> getAllBooksTitleJTable(String book_title) //obtaining data from book database.
+	{
+		int count;
+		book_title = "%" + book_title + "%";
+		String sql="select book_isbn,book_title,book_category,no_of_books from book where book_title like ?";
+		//Book b=null;
+
+		Vector<String> row=new Vector<>();
+		Vector<Vector<String>> data=new Vector<>();
+
+		try(Connection con=DataBaseConnectionManager.getConnection())
+		{
+			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setString(1, book_title);
+			ResultSet rs=ps.executeQuery();
+
+			while(rs != null && rs.next())
+			{
+				
+				row=new Vector<>();
+				row.add(rs.getString(1));
+				row.add(rs.getString(2));
+				row.add(rs.getString(3));
+				row.add(rs.getString(4));
+				data.add(row);
+			}
+
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return data;
+	}
+
 
 	public Vector<Vector<String>> getAllStudentsForJTable(String usn) 
 	{
+
 		usn = "%" + usn + "%";
 		String sql="select usn,name from Student where usn like ?";
 		Vector<String> row=new Vector<>();
@@ -155,11 +199,13 @@ public class IssueDAO {
 			
 			while(rs != null && rs.next())
 			{
+				
 				row=new Vector<>();
 				row.add(rs.getString(1));
 				row.add(rs.getString(2));
 				
 				data.add(row);
+				
 			}
 			
 			
